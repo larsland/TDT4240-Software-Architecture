@@ -12,12 +12,15 @@ public class GameLayer extends Layer {
     private Paddle paddleComputer;
     private Board board;
     private Ball ball;
-    private int canvasWidth;
-    private int canvasHeight;
     private int playerScore;
     private int computerScore;
+    private int screenWidth;
+    private int screenHeight;
 
-    public GameLayer() {
+    public GameLayer(int screenWidth, int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight - 50;
+
         board = new Board();
         paddle = new Paddle(new Image(R.drawable.paddle));
         paddleComputer = new Paddle(new Image(R.drawable.paddle));
@@ -40,12 +43,12 @@ public class GameLayer extends Layer {
             playerScore++;
             ball.reset();
         }
-        else if (ball.getPosition().getY() > canvasHeight) {
+        else if (ball.getPosition().getY() > screenHeight) {
             computerScore++;
             ball.reset();
         }
 
-        paddleComputer.setPosition(ball.getPosition().getX(), 84);
+        paddleComputer.setPosition(ball.getPosition().getX(), 80);
         paddleComputer.update(dt);
         paddle.update(dt);
         ball.update(dt);
@@ -53,16 +56,13 @@ public class GameLayer extends Layer {
 
     @Override
     public void draw(Canvas canvas, BoundingBox boundingBox) {
-        canvasWidth = canvas.getWidth();
-        canvasHeight = canvas.getHeight();
-
         board.draw(canvas);
         paddle.draw(canvas);
         paddleComputer.draw(canvas);
         ball.draw(canvas);
 
         Font font = new Font(255, 255, 255, 100, Typeface.SANS_SERIF, Typeface.BOLD);
-        canvas.drawText("" + playerScore, 30, 1000, font);
+        canvas.drawText("" + playerScore, 30, screenHeight - 100, font);
         canvas.drawText("" + computerScore, 30, 100, font);
     }
 

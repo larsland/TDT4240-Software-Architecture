@@ -12,9 +12,9 @@ public class GameState extends State implements TouchListener {
     private World gameWorld;
     private GameLayer gameLayer;
 
-    public GameState() {
+    public GameState(int screenWidth, int screenHeight) {
         gameWorld = new World();
-        gameLayer = new GameLayer();
+        gameLayer = new GameLayer(screenWidth, screenHeight);
         gameWorld.addLayer(gameLayer);
     }
 
