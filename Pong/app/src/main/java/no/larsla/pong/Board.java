@@ -11,14 +11,14 @@ public class Board {
 
     private Sprite wallSpriteWest, wallSpriteEast, lineSprite;
 
-    public Board() {
+    public Board(int screenWidth, int screenHeight) {
         wallSpriteWest = new Sprite(wall);
         wallSpriteEast = new Sprite(wall);
         lineSprite = new Sprite(line);
 
         wallSpriteWest.setPosition(4, 0);
-        wallSpriteEast.setPosition(764, 0);
-        lineSprite.setPosition(0, 570);
+        wallSpriteEast.setPosition(screenWidth, 0);
+        lineSprite.setPosition(0, screenHeight / 2);
 
         wallSpriteWest.update(0);
         wallSpriteEast.update(0);

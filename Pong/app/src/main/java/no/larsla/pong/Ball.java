@@ -5,9 +5,13 @@ import sheep.graphics.Image;
 
 public class Ball extends Sprite {
 
-    public Ball(Image image) {
+    private int xPos, yPos;
+
+    public Ball(Image image, int screenWidth, int screenHeight) {
         super(image);
-        setPosition(300, 570);
+        xPos = screenWidth / 2;
+        yPos = screenHeight / 2;
+        setPosition(xPos, yPos);
         setSpeed(300, -700);
     }
 
@@ -17,7 +21,7 @@ public class Ball extends Sprite {
     }
 
     public void reset() {
-        setPosition(300, 570);
+        setPosition(xPos, yPos);
         setSpeed(300, -700);
     }
 }

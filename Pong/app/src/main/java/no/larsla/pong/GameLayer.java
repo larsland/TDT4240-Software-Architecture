@@ -21,10 +21,10 @@ public class GameLayer extends Layer {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight - 50;
 
-        board = new Board();
-        paddle = new Paddle(new Image(R.drawable.paddle));
-        paddleComputer = new Paddle(new Image(R.drawable.paddle));
-        ball = new Ball(new Image(R.drawable.ball));
+        board = new Board(this.screenWidth, this.screenHeight);
+        paddle = new Paddle(new Image(R.drawable.paddle), this.screenWidth, this.screenHeight);
+        paddleComputer = new Paddle(new Image(R.drawable.paddle), this.screenWidth, this.screenHeight);
+        ball = new Ball(new Image(R.drawable.ball), this.screenWidth, this.screenHeight);
 
         playerScore = 0;
         computerScore = 0;
@@ -62,8 +62,8 @@ public class GameLayer extends Layer {
         ball.draw(canvas);
 
         Font font = new Font(255, 255, 255, 100, Typeface.SANS_SERIF, Typeface.BOLD);
-        canvas.drawText("" + playerScore, 30, screenHeight - 100, font);
         canvas.drawText("" + computerScore, 30, 100, font);
+        canvas.drawText("" + playerScore, 30, (screenHeight - 100), font);
     }
 
     public Paddle getPaddle() {
