@@ -1,73 +1,84 @@
 package no.larsla.coptergame;
 
-import android.graphics.Canvas;
-
-import sheep.game.Sprite;
 import sheep.game.State;
-import sheep.graphics.Image;
+import android.content.res.Resources;
+import android.graphics.*;
 
-/**
- * Created by lars on 28.01.16.
- */
 public class Task3 extends State {
-    private Image copterImage = new Image(R.drawable.copter_east);
-    private Image backgroundImage = new Image(R.drawable.background);
-    private Image verticalWallImage = new Image(R.drawable.wall_vertical);
+    private CopterAnimated copter, copter2, copter3;
+    private int canvasHeight, canvasWidth;
 
-    private Sprite backgroundSprite;
-    private Sprite westWallSprite;
-    private Sprite eastWallSprite;
-    private Sprite copterSprite;
 
-    private static final int speed = 150;
+    public Task3(Resources resources) {
+        // Initiation 3 CopterAnimated classes with different initial positions
+        copter = new CopterAnimated(BitmapFactory.decodeResource(resources, R.drawable.copter_sheet), 0, 0, 60, 4);
+        copter2 = new CopterAnimated(BitmapFactory.decodeResource(resources, R.drawable.copter_sheet), 200, 300, 60, 4);
+        copter3 = new CopterAnimated(BitmapFactory.decodeResource(resources, R.drawable.copter_sheet), 400, 700, 60, 4);
 
-    private int screenWidth;
-    private int screenHeight;
+        // Setting each copter's speed
+        copter.setSpeed(500, 500);
+        copter2.setSpeed(1000, 1000);
+        copter3.setSpeed(2000, 2000);
 
-    public Task3(int screenWidth, int screenHeight) {
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-
-        copterSprite = new Sprite(copterImage);
-        backgroundSprite = new Sprite(backgroundImage);
-        westWallSprite = new Sprite(verticalWallImage);
-        eastWallSprite = new Sprite(verticalWallImage);
-
-        westWallSprite.setPosition(4, 215);
-        eastWallSprite.setPosition(760, 215);
-
-        copterSprite.setPosition(40, 120);
-        copterSprite.setSpeed(speed, 0);
-
-        westWallSprite.update(0);
-        eastWallSprite.update(0);
-
+        copter.update(System.currentTimeMillis());
+        copter2.update(System.currentTimeMillis());
+        copter3.update(System.currentTimeMillis());
     }
 
     public void draw(Canvas canvas) {
-        backgroundSprite.draw(canvas);
-        copterSprite.draw(canvas);
-        westWallSprite.draw(canvas);
-        eastWallSprite.draw(canvas);
+        canvasHeight = canvas.getHeight();
+        canvasWidth = canvas.getWidth();
+
+        canvas.drawColor(Color.rgb(254, 0, 254));
+        copter.draw(canvas);
+        copter2.draw(canvas);
+        copter3.draw(canvas);
     }
 
+    // Updates each sprite, and checks if any of them intersects with eachother.
     public void update(float dt) {
-        if(copterSprite.collides(westWallSprite)) {
-            System.out.println("Copter collided with west wall!");
-            copterSprite.setScale(1, 1);
-            copterSprite.setSpeed(speed, copterSprite.getSpeed().getY());
+        checkWallCollision(copter);
+        checkWallCollision(copter2);
+        checkWallCollision(copter3);
 
+        if ((copter.hitBox().intersect(copter2.hitBox())) ||
+                (copter2.hitBox().intersect(copter.hitBox()))) {
+            copter.setSpeed(-copter.getSpeed().getX(), -copter.getSpeed().getY());
+            copter2.setSpeed(-copter2.getSpeed().getX(), -copter2.getSpeed().getY());
+            copter.flip();
+            copter2.flip();
         }
-        else if(copterSprite.collides(eastWallSprite)) {
-            System.out.println("Copter collided with east wall!");
-            copterSprite.setScale(-1, 1);
-            copterSprite.setSpeed(-speed, copterSprite.getSpeed().getY());
-
+        if ((copter.hitBox().intersect(copter3.hitBox())) ||
+                (copter3.hitBox().intersect(copter.hitBox()))) {
+            copter.setSpeed(-copter.getSpeed().getX(), -copter.getSpeed().getY());
+            copter3.setSpeed(-copter3.getSpeed().getX(), -copter3.getSpeed().getY());
+            copter.flip();
+            copter3.flip();
         }
-        copterSprite.update(dt);
+        if ((copter3.hitBox().intersect(copter2.hitBox())) ||
+                (copter2.hitBox().intersect(copter3.hitBox()))) {
+            copter3.setSpeed(-copter3.getSpeed().getX(), -copter3.getSpeed().getY());
+            copter2.setSpeed(-copter2.getSpeed().getX(), -copter2.getSpeed().getY());
+            copter3.flip();
+            copter2.flip();
+        }
 
 
-
+        copter.update(System.currentTimeMillis());
+        copter2.update(System.currentTimeMillis());
     }
 
+    /**
+     * Checks if the given sprite class goes outside of the canvas, and reverse their speed if they do.
+     * @param sprite
+     */
+    public void checkWallCollision(CopterAnimated sprite) {
+        if ((sprite.getX() > (canvasWidth - sprite.getWidth())) || (sprite.getX() < 0)) {
+            sprite.setSpeed(-sprite.getSpeed().getX(), sprite.getSpeed().getY());
+            sprite.flip();
+        }
+        if ((sprite.getY() > (canvasHeight - sprite.getHeight())) || (sprite.getY() < 0)) {
+            sprite.setSpeed(sprite.getSpeed().getX(), -sprite.getSpeed().getY());
+        }
+    }
 }

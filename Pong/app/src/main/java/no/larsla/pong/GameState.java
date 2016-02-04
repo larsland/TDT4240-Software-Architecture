@@ -3,22 +3,16 @@ package no.larsla.pong;
 import sheep.game.State;
 import sheep.game.World;
 import sheep.input.TouchListener;
-
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.text.method.Touch;
 import android.view.MotionEvent;
 
-/**
- * Created by lars on 02.02.16.
- */
 public class GameState extends State implements TouchListener {
 
     private World gameWorld;
     private GameLayer gameLayer;
 
-    public GameState(Resources resources) {
+    public GameState() {
         gameWorld = new World();
         gameLayer = new GameLayer();
         gameWorld.addLayer(gameLayer);

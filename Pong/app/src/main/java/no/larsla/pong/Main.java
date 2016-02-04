@@ -9,7 +9,7 @@ public class Main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Game game = new Game(this, null);
-        game.pushState(new GameState(game.getResources()));
+        game.pushState(new GameState());
         setContentView(game);
     }
 }
