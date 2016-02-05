@@ -26,7 +26,14 @@ public class GameState extends State implements TouchListener {
 
     @Override
     public void update(float dt) {
+        if (checkTerminalState()) {
+            gameLayer.gameWon();
+        }
         gameWorld.update(dt);
+    }
+
+    public boolean checkTerminalState() {
+        return (gameLayer.getPlayerScore() == 21) || (gameLayer.getComputerScore() == 21);
     }
 
     public boolean onTouchMove(MotionEvent event) {

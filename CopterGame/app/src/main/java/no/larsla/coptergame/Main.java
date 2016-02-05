@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.WindowManager;
 import sheep.game.Game;
 
@@ -19,7 +21,7 @@ public class Main extends Activity {
         int screenHeight = displayMetrics.heightPixels;
 
         Game game = new Game(this, null);
-        game.pushState(new Task3(game.getResources()));
+        game.pushState(new Task2(game.getResources(), screenWidth, screenHeight));
         setContentView(game);
     }
 }

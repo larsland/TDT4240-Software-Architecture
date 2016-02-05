@@ -9,7 +9,7 @@ public class Task3 extends State {
     private int canvasHeight, canvasWidth;
 
 
-    public Task3(Resources resources) {
+    public Task3(Resources resources, int screenWidth, int screenHeight) {
         // Initiation 3 CopterAnimated classes with different initial positions
         copter = new CopterAnimated(BitmapFactory.decodeResource(resources, R.drawable.copter_sheet), 0, 0, 60, 4);
         copter2 = new CopterAnimated(BitmapFactory.decodeResource(resources, R.drawable.copter_sheet), 200, 300, 60, 4);
@@ -33,6 +33,7 @@ public class Task3 extends State {
         copter.draw(canvas);
         copter2.draw(canvas);
         copter3.draw(canvas);
+
     }
 
     // Updates each sprite, and checks if any of them intersects with eachother.

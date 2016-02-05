@@ -1,5 +1,7 @@
 package no.larsla.pong;
 
+import java.util.Random;
+
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -12,7 +14,7 @@ public class Ball extends Sprite {
         xPos = screenWidth / 2;
         yPos = screenHeight / 2;
         setPosition(xPos, yPos);
-        setSpeed(300, -700);
+        setSpeed(300, -500);
     }
 
     @Override
@@ -22,6 +24,15 @@ public class Ball extends Sprite {
 
     public void reset() {
         setPosition(xPos, yPos);
-        setSpeed(300, -700);
+        Random randomNum = new Random();
+        int ballDirection = randomNum.nextInt(2);
+        if (ballDirection == 0) {
+            setSpeed(300, -500);
+        }
+        else if (ballDirection == 1) {
+            setSpeed(-300, -500);
+        }
+
+
     }
 }

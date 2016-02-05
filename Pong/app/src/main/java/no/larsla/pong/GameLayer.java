@@ -16,6 +16,7 @@ public class GameLayer extends Layer {
     private int computerScore;
     private int screenWidth;
     private int screenHeight;
+    private String message;
 
     public GameLayer(int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
@@ -28,16 +29,16 @@ public class GameLayer extends Layer {
 
         playerScore = 0;
         computerScore = 0;
-
+        message = "";
     }
 
     @Override
     public void update(float dt) {
-        if ((ball.collides(paddle)) || (ball.collides(paddleComputer))) {
-            ball.setSpeed(ball.getSpeed().getX(), -ball.getSpeed().getY() * 1.05f);
-        }
-        else if ((ball.collides(board.getWallSpriteEast()) || (ball.collides(board.getWallSpriteWest())))) {
+        if ((ball.getPosition().getX() < 8) || (ball.getPosition().getX() > screenWidth - 8)) {
             ball.setSpeed(-ball.getSpeed().getX() * 1.1f, ball.getSpeed().getY());
+        }
+        else if ((ball.collides(paddle)) || (ball.collides(paddleComputer))) {
+            ball.setSpeed(ball.getSpeed().getX(), -ball.getSpeed().getY() * 1.05f);
         }
         else if (ball.getPosition().getY() < 0) {
             playerScore++;
@@ -48,7 +49,7 @@ public class GameLayer extends Layer {
             ball.reset();
         }
 
-        paddleComputer.setPosition(ball.getPosition().getX(), 80);
+        paddleComputer.setPosition(ball.getPosition().getX()/1.12f, 80);
         paddleComputer.update(dt);
         paddle.update(dt);
         ball.update(dt);
@@ -64,9 +65,39 @@ public class GameLayer extends Layer {
         Font font = new Font(255, 255, 255, 100, Typeface.SANS_SERIF, Typeface.BOLD);
         canvas.drawText("" + computerScore, 30, 100, font);
         canvas.drawText("" + playerScore, 30, (screenHeight - 100), font);
+        canvas.drawText("" + message, (screenWidth / 2), (screenHeight / 2), font);
+    }
+
+    public void gameWon() {
+        if (playerScore > computerScore) {
+            message = "You won!";
+            update(0);
+        }
+        else {
+            message = "You lost...";
+            update(0);
+        }
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        resetGame();
     }
 
     public Paddle getPaddle() {
         return this.paddle;
+    }
+    public int getPlayerScore() {
+        return this.playerScore;
+    }
+    public int getComputerScore() {
+        return this.computerScore;
+    }
+    public void resetGame() {
+        playerScore = 0;
+        computerScore = 0;
+        ball.reset();
+        message = "";
     }
 }

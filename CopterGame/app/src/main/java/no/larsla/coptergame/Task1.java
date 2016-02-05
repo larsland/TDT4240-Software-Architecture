@@ -1,43 +1,45 @@
 package no.larsla.coptergame;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
 
 public class Task1 extends State {
     private Image copterImage = new Image(R.drawable.copter_east);
-    private Image backgroundImage = new Image(R.drawable.background);
     private Image verticalWallImage = new Image(R.drawable.wall_vertical);
     private Image horizontalWallImage = new Image(R.drawable.wall_horizontal);
 
-    private Sprite backgroundSprite;
     private Sprite westWallSprite;
     private Sprite eastWallSprite;
     private Sprite northWallSprite;
     private Sprite southWallSprite;
     private Sprite copterSprite;
 
-    private int canvasWidth;
-    private int canvasHeight;
+    private int screenWidth;
+    private int screenHeight;
 
     // Initial speed for the copter sprite
     private int speedX = 200;
     private int speedY = 150;
 
-    public Task1() {
+    public Task1(Resources res, int screenWidth, int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight - 50;
         copterSprite = new Sprite(copterImage);
-        backgroundSprite = new Sprite(backgroundImage);
         westWallSprite = new Sprite(verticalWallImage);
         eastWallSprite = new Sprite(verticalWallImage);
         northWallSprite = new Sprite(horizontalWallImage);
         southWallSprite = new Sprite(horizontalWallImage);
 
         // Assigning wall sprite positions
-        westWallSprite.setPosition(4, 215);
-        eastWallSprite.setPosition(760, 215);
+        westWallSprite.setPosition(4, 0);
+        eastWallSprite.setPosition(this.screenWidth - 4, 0);
         northWallSprite.setPosition(0, 8);
-        southWallSprite.setPosition(0, this.canvasHeight-54);
+        southWallSprite.setPosition(0, this.screenHeight - 4);
 
         // Assigning initial position and speed to copter sprite
         copterSprite.setPosition(200, 120);
@@ -51,10 +53,7 @@ public class Task1 extends State {
     }
 
     public void draw(Canvas canvas) {
-        canvasWidth = canvas.getWidth();
-        canvasHeight = canvas.getHeight();
-
-        backgroundSprite.draw(canvas);
+        canvas.drawColor(Color.rgb(254, 0, 254));
         copterSprite.draw(canvas);
         westWallSprite.draw(canvas);
         eastWallSprite.draw(canvas);
