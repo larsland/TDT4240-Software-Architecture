@@ -8,6 +8,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.WindowManager;
 import sheep.game.Game;
+import sheep.gui.TextButton;
+import sheep.gui.WidgetAction;
+import sheep.gui.WidgetListener;
 
 public class Main extends Activity {
 
@@ -19,9 +22,8 @@ public class Main extends Activity {
         wm.getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
-
         Game game = new Game(this, null);
-        game.pushState(new Task2(game.getResources(), screenWidth, screenHeight));
+        game.pushState(new Task3(game.getResources(), screenWidth, screenHeight));
         setContentView(game);
     }
 }

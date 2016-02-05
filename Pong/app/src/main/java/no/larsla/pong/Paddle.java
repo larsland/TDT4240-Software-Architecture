@@ -5,9 +5,14 @@ import sheep.graphics.Image;
 
 public class Paddle extends Sprite {
 
-    public Paddle(Image image, int screenWidth, int screenHeight) {
+    public Paddle(Image image, int screenWidth, int screenHeight, boolean player) {
         super(image);
-        setPosition(screenWidth / 2, screenHeight - 80);
+        if (player) {
+            setPosition(screenWidth / 2, screenHeight - 250);
+        }
+        else {
+            setPosition(screenWidth / 2, 150);
+        }
     }
 
     @Override

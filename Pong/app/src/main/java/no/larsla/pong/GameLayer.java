@@ -2,6 +2,8 @@ package no.larsla.pong;
 
 import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.os.SystemClock;
+
 import sheep.game.Layer;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
@@ -23,8 +25,8 @@ public class GameLayer extends Layer {
         this.screenHeight = screenHeight - 50;
 
         board = new Board(this.screenWidth, this.screenHeight);
-        paddle = new Paddle(new Image(R.drawable.paddle), this.screenWidth, this.screenHeight);
-        paddleComputer = new Paddle(new Image(R.drawable.paddle), this.screenWidth, this.screenHeight);
+        paddle = new Paddle(new Image(R.drawable.paddle), this.screenWidth, this.screenHeight, true);
+        paddleComputer = new Paddle(new Image(R.drawable.paddle), this.screenWidth, this.screenHeight, false);
         ball = new Ball(new Image(R.drawable.ball), this.screenWidth, this.screenHeight);
 
         playerScore = 0;
@@ -49,7 +51,19 @@ public class GameLayer extends Layer {
             ball.reset();
         }
 
-        paddleComputer.setPosition(ball.getPosition().getX()/1.12f, 80);
+        float paddleX = paddleComputer.getPosition().getX();
+        float ballX = ball.getPosition().getX();
+
+        float distanceX = ballX - paddleX;
+
+        if (distanceX != 0) {
+            if (ballX < paddleX) {
+                paddleComputer.setXSpeed(-350);
+            } else if (ballX > paddleX) {
+                paddleComputer.setXSpeed(350);
+            }
+        }
+
         paddleComputer.update(dt);
         paddle.update(dt);
         ball.update(dt);
@@ -77,11 +91,7 @@ public class GameLayer extends Layer {
             message = "You lost...";
             update(0);
         }
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        SystemClock.sleep(3000);
         resetGame();
     }
 
