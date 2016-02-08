@@ -34,7 +34,7 @@ public class Task1 extends State {
         westWallSprite.setPosition(4, 0);
         eastWallSprite.setPosition(this.screenWidth - 4, 0);
         northWallSprite.setPosition(0, 8);
-        southWallSprite.setPosition(0, this.screenHeight - 4);
+        southWallSprite.setPosition(0, this.screenHeight - 50);
 
         // Initial update of wall sprites
         eastWallSprite.update(0);

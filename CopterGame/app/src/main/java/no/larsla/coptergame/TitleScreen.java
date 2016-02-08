@@ -3,6 +3,7 @@ package no.larsla.coptergame;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import sheep.game.Game;
 import sheep.game.State;
@@ -22,9 +23,12 @@ public class TitleScreen extends State implements WidgetListener {
         this.screenHeight = screenHeight;
         this.game = game;
 
-        task1 = new TextButton((this.screenWidth/2) - 30, 200, "Task 1");
-        task2 = new TextButton((this.screenWidth/2) - 30, 400, "Task 2");
-        task3 = new TextButton((this.screenWidth/2) - 30, 600, "Task 3");
+        Font buttonFont = new Font(255, 255, 255, 100, Typeface.SANS_SERIF, Typeface.BOLD);
+        Paint[] buttonStyle = {buttonFont, buttonFont};
+
+        task1 = new TextButton((this.screenWidth/2) - 30, 200, "Task 1", buttonStyle);
+        task2 = new TextButton((this.screenWidth/2) - 30, 400, "Task 2", buttonStyle);
+        task3 = new TextButton((this.screenWidth/2) - 30, 600, "Task 3", buttonStyle);
 
         task1.addWidgetListener(this);
         task2.addWidgetListener(this);
