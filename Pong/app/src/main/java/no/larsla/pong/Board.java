@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
+// Class to position and draw the game board
 public class Board {
     private Image wall = new Image(R.drawable.wall);
     private Image line = new Image(R.drawable.line);

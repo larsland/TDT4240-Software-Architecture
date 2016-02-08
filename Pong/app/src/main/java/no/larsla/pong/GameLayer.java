@@ -3,7 +3,6 @@ package no.larsla.pong;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.os.SystemClock;
-
 import sheep.game.Layer;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
@@ -34,6 +33,7 @@ public class GameLayer extends Layer {
         message = "";
     }
 
+    // Main event loop; checks if ball collides with wall, a paddle, or if a paddle scores a point
     @Override
     public void update(float dt) {
         if ((ball.getPosition().getX() < 8) || (ball.getPosition().getX() > screenWidth - 8)) {
@@ -51,6 +51,7 @@ public class GameLayer extends Layer {
             ball.reset();
         }
 
+        // Moves the computer paddle's x-position according to the balls position
         float paddleX = paddleComputer.getPosition().getX();
         float ballX = ball.getPosition().getX();
 
@@ -91,7 +92,6 @@ public class GameLayer extends Layer {
             message = "You lost...";
             update(0);
         }
-        SystemClock.sleep(3000);
         resetGame();
     }
 

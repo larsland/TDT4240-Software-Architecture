@@ -32,10 +32,12 @@ public class GameState extends State implements TouchListener {
         gameWorld.update(dt);
     }
 
+    // Checks if player or computer has reached 21 points
     public boolean checkTerminalState() {
         return (gameLayer.getPlayerScore() == 21) || (gameLayer.getComputerScore() == 21);
     }
 
+    // Moves player's paddle to touch events x-position
     public boolean onTouchMove(MotionEvent event) {
         gameLayer.getPaddle().setPosition(event.getX(), gameLayer.getPaddle().getY());
         return true;

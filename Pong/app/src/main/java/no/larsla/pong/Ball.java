@@ -1,7 +1,6 @@
 package no.larsla.pong;
 
 import java.util.Random;
-
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -22,6 +21,7 @@ public class Ball extends Sprite {
         super.update(dt);
     }
 
+    // Function to reset position of the ball, and sets the speed of the ball to a random direction
     public void reset() {
         setPosition(xPos, yPos);
         Random randomNum = new Random();
