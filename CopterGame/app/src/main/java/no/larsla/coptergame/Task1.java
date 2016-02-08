@@ -3,7 +3,6 @@ package no.larsla.coptergame;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
-
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
@@ -29,7 +28,7 @@ public class Task1 extends State {
         northWallSprite = new Sprite(horizontalWallImage);
         southWallSprite = new Sprite(horizontalWallImage);
 
-        copterSprite = new Copter(new Image(R.drawable.copter_east), this.screenWidth, this.screenHeight, 200, 150);
+        copterSprite = new Copter(new Image(R.drawable.copter_east), this.screenWidth, this.screenHeight, -200, 150);
 
         // Assigning wall sprite positions
         westWallSprite.setPosition(4, 0);
@@ -53,10 +52,8 @@ public class Task1 extends State {
         southWallSprite.draw(canvas);
     }
 
-    /**
-     * Detects collision between copter sprite and wall sprites, changes sprite scale and speed
-     * direction according to which wall the copter collides with
-     */
+    // Detects collision between copter sprite and wall sprites, changes sprite scale and speed
+    // direction according to which wall the copter collides with
     public void update(float dt) {
         if(copterSprite.collides(westWallSprite)) {
             copterSprite.setScale(1, 1);

@@ -1,38 +1,61 @@
 package no.larsla.coptergame;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
-
+import android.graphics.Typeface;
 import sheep.game.Game;
 import sheep.game.State;
+import sheep.graphics.Font;
 import sheep.gui.TextButton;
 import sheep.gui.WidgetAction;
 import sheep.gui.WidgetListener;
 
-/**
- * Created by lars on 05.02.16.
- */
 public class TitleScreen extends State implements WidgetListener {
 
     private TextButton task1, task2, task3;
+    private Game game;
+    private int screenWidth, screenHeight;
 
-    public TitleScreen() {
-        task1 = new TextButton(100, 200, "1");
-        task2 = new TextButton(100, 400, "2");
-        task3 = new TextButton(100, 600, "3");
+    public TitleScreen(Game game, Resources res, int screenWidth, int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.game = game;
+
+        task1 = new TextButton((this.screenWidth/2) - 30, 200, "Task 1");
+        task2 = new TextButton((this.screenWidth/2) - 30, 400, "Task 2");
+        task3 = new TextButton((this.screenWidth/2) - 30, 600, "Task 3");
+
+        task1.addWidgetListener(this);
+        task2.addWidgetListener(this);
+        task3.addWidgetListener(this);
+
+        addTouchListener(task1);
+        addTouchListener(task2);
+        addTouchListener(task3);
     }
-
 
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
+        task1.draw(canvas);
+        task2.draw(canvas);
+        task3.draw(canvas);
+
+        Font font = new Font(255, 255, 255, 40, Typeface.SANS_SERIF, Typeface.BOLD);
+        canvas.drawText("Welcome to larsland's helicopters", 80, 100, font);
     }
 
+    // Controlls which task (state) to push to game, depending on which textButton is clicked
     @Override
     public void actionPerformed(WidgetAction widgetAction) {
-        if (widgetAction.equals("1")) {
-            //Game game = new Game(this, null);
-            //game.pushState(new Task1(game.getResources(), 100, 100));
-
+        if (widgetAction.getSource() == task1) {
+            game.pushState(new Task1(game.getResources(), screenWidth, screenHeight));
+        }
+        else if (widgetAction.getSource() == task2) {
+            game.pushState(new Task2(game.getResources(), screenWidth, screenHeight));
+        }
+        else if (widgetAction.getSource() == task3) {
+            game.pushState(new Task3(game.getResources(), screenWidth, screenHeight));
         }
     }
-}
+}// Class

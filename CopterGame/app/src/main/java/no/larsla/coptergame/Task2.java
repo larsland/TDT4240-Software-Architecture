@@ -14,7 +14,6 @@ import sheep.input.TouchListener;
 
 public class Task2 extends State implements TouchListener {
     private Image copterImage = new Image(R.drawable.copter_east);
-
     private Sprite copterSprite;
     private DecimalFormat f;
 
@@ -36,6 +35,7 @@ public class Task2 extends State implements TouchListener {
     }
 
     public boolean onTouchMove(MotionEvent event) {
+        // Flips the sprite to the correct direction, according to where click-event is
         if (copterSprite.getPosition().getX() < event.getX()) {
             copterSprite.setScale(1, 1);
         }
@@ -43,6 +43,8 @@ public class Task2 extends State implements TouchListener {
             copterSprite.setScale(-1, 1);
         }
 
+        // Gets x and y position of copter and click-event, calculates difference, and sets speed
+        // according to the distance, so the copter will move towards the click-event
         float copterX = copterSprite.getPosition().getX();
         float copterY = copterSprite.getPosition().getY();
         float eventX = event.getX();

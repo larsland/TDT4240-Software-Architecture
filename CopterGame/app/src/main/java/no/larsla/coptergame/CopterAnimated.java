@@ -9,7 +9,7 @@ import android.util.DisplayMetrics;
 import sheep.game.Sprite;
 
 public class CopterAnimated extends Sprite {
-    private Bitmap bitmap;      // the animation sequence
+    private Bitmap bitmap;
     private Rect sourceRect;    // rectangle to select image frame
     private int frameNr;        // number of frames in animation
     private int currentFrame;   // the current frame
@@ -17,8 +17,8 @@ public class CopterAnimated extends Sprite {
     private int framePeriod;    // milliseconds between each frame (1000/fps)
     private int spriteWidth;    // the width of the sprite to calculate the cut out rectangle
     private int spriteHeight;   // the height of the sprite
-    private float x;              // the X coordinate of the object (top left of the image)
-    private float y;
+    private float x;            // the X coordinate of the object
+    private float y;            // the Y coordinate of the object
 
     public CopterAnimated(Bitmap bitmap, float x, float y, int fps, int frameCount){
         this.bitmap = bitmap;
@@ -58,6 +58,7 @@ public class CopterAnimated extends Sprite {
         canvas.drawBitmap(bitmap, sourceRect, destRect, null);
     }
 
+    // Function to flip bitmap horizontally
     public void flip(){
         Matrix mirrorMatrix = new Matrix();
         mirrorMatrix.preScale(-1, 1);
@@ -76,6 +77,7 @@ public class CopterAnimated extends Sprite {
     public int getHeight(){return spriteHeight;}
     public int getWidth(){return spriteWidth;}
 
+    // The hitBox for the frames in the bitmap
     public Rect hitBox(){
         return new Rect((int)getX(), (int)getY(), (int)getX() + spriteWidth, (int)getY() + spriteHeight);
     }

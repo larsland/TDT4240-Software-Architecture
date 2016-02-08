@@ -33,7 +33,6 @@ public class Task3 extends State {
         copter.draw(canvas);
         copter2.draw(canvas);
         copter3.draw(canvas);
-
     }
 
     // Updates each sprite, and checks if any of them intersects with eachother.
@@ -63,16 +62,12 @@ public class Task3 extends State {
             copter3.flip();
             copter2.flip();
         }
-
-
         copter.update(System.currentTimeMillis());
         copter2.update(System.currentTimeMillis());
     }
 
-    /**
-     * Checks if the given sprite class goes outside of the canvas, and reverse their speed if they do.
-     * @param sprite
-     */
+
+    // Checks if the given sprite class goes outside of the canvas, and reverse their speed if they do.
     public void checkWallCollision(CopterAnimated sprite) {
         if ((sprite.getX() > (canvasWidth - sprite.getWidth())) || (sprite.getX() < 0)) {
             sprite.setSpeed(-sprite.getSpeed().getX(), sprite.getSpeed().getY());
