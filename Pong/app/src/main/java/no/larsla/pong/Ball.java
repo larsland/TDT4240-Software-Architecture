@@ -30,12 +30,12 @@ public class Ball extends Sprite {
     public void reset() {
         setPosition(xPos, yPos);
         Random randomNum = new Random();
-        int ballDirection = randomNum.nextInt(2);
-        if (ballDirection == 0) {
-            setSpeed(300, -500);
-        }
-        else if (ballDirection == 1) {
-            setSpeed(-300, -500);
+        int ballDirection = randomNum.nextInt(4);
+        switch (ballDirection) {
+            case 0: setSpeed(300, -500);break;
+            case 1: setSpeed(-300, -500);break;
+            case 2: setSpeed(300, 500);break;
+            case 3: setSpeed(-300, 500);break;
         }
     }
 }
