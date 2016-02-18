@@ -2,6 +2,7 @@ package no.larsla.pong;
 
 import sheep.game.State;
 import sheep.game.World;
+import sheep.graphics.Font;
 import sheep.gui.TextButton;
 import sheep.gui.WidgetAction;
 import sheep.gui.WidgetListener;
@@ -10,6 +11,8 @@ import sheep.input.TouchListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -27,7 +30,9 @@ public class GameState extends State implements TouchListener, WidgetListener {
         gameLayer = new GameLayer();
         gameWorld.addLayer(gameLayer);
 
-        difficultyBtn = new TextButton(Main.screenWidth-100, (Main.screenHeight/2) - 100, "Change difficulty");
+        Font buttonFont = new Font(255, 255, 255, 100, Typeface.SANS_SERIF, Typeface.BOLD);
+        Paint[] buttonStyle = {buttonFont, buttonFont};
+        difficultyBtn = new TextButton(Main.screenWidth-200, (Main.screenHeight/2) - 100, "+-", buttonStyle);
         difficultyBtn.addWidgetListener(this);
 
         addTouchListener(difficultyBtn);

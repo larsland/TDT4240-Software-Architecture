@@ -19,8 +19,6 @@ public class GameLayer extends Layer implements WidgetListener{
     private int playerScore;
     private int computerScore;
     private String message;
-    private StateContext sc = new StateContext();
-    private TextButton easyBtn, hardBtn;
 
     public GameLayer() {
         board = new Board();
@@ -56,14 +54,16 @@ public class GameLayer extends Layer implements WidgetListener{
         float ballX = ball.getPosition().getX();
 
         float distanceX = ballX - paddleX;
-
-        if (distanceX != 0) {
-            if (ballX < paddleX) {
-                paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
-            } else if (ballX > paddleX) {
-                paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
-            }
+        if (ballX < paddleX) {
+            paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
+        } else if (ballX > paddleX) {
+            paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
         }
+/*
+        if (distanceX != 0) {
+
+        }
+        */
 
         paddleComputer.update(dt);
         paddle.update(dt);
@@ -85,10 +85,10 @@ public class GameLayer extends Layer implements WidgetListener{
 
     public void changeDifficulty(ComputerState state) {
         if (state instanceof EasyState) {
-            this.paddleComputer.setPaddleSpeed(500);
+            this.paddleComputer.setPaddleSpeed(350);
         }
         else if (state instanceof HardState) {
-            this.paddleComputer.setPaddleSpeed(350);
+            this.paddleComputer.setPaddleSpeed(800);
         }
     }
 
