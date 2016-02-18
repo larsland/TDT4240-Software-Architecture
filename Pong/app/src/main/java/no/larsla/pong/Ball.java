@@ -7,13 +7,18 @@ import sheep.graphics.Image;
 public class Ball extends Sprite {
 
     private int xPos, yPos;
+    private static final Ball INSTANCE = new Ball();
 
-    public Ball(Image image, int screenWidth, int screenHeight) {
-        super(image);
-        xPos = screenWidth / 2;
-        yPos = screenHeight / 2;
+    private Ball() {
+        super(new Image(R.drawable.ball));
+        xPos = Main.screenWidth / 2;
+        yPos = Main.screenHeight / 2;
         setPosition(xPos, yPos);
         setSpeed(300, -500);
+    }
+
+    public static Ball getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -32,7 +37,5 @@ public class Ball extends Sprite {
         else if (ballDirection == 1) {
             setSpeed(-300, -500);
         }
-
-
     }
 }

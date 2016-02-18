@@ -7,19 +7,20 @@ import sheep.graphics.Image;
 
 // Class to position and draw the game board
 public class Board {
+    private static Board instance = null;
     private Image wall = new Image(R.drawable.wall);
     private Image line = new Image(R.drawable.line);
 
     private Sprite wallSpriteWest, wallSpriteEast, lineSprite;
 
-    public Board(int screenWidth, int screenHeight) {
+    public Board() {
         wallSpriteWest = new Sprite(wall);
         wallSpriteEast = new Sprite(wall);
         lineSprite = new Sprite(line);
 
         wallSpriteWest.setPosition(4, 0);
-        wallSpriteEast.setPosition(screenWidth, 0);
-        lineSprite.setPosition(0, screenHeight / 2);
+        wallSpriteEast.setPosition(Main.screenWidth, 0);
+        lineSprite.setPosition(0, Main.screenHeight / 2);
 
         wallSpriteWest.update(0);
         wallSpriteEast.update(0);

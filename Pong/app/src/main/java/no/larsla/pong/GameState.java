@@ -3,19 +3,29 @@ package no.larsla.pong;
 import sheep.game.State;
 import sheep.game.World;
 import sheep.input.TouchListener;
+
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 
 public class GameState extends State implements TouchListener {
 
+
     private World gameWorld;
     private GameLayer gameLayer;
+    private static final GameState INSTANCE = new GameState();
 
-    public GameState(int screenWidth, int screenHeight) {
+    private GameState() {
         gameWorld = new World();
-        gameLayer = new GameLayer(screenWidth, screenHeight);
+        gameLayer = new GameLayer();
         gameWorld.addLayer(gameLayer);
+    }
+
+    public static GameState getInstance() {
+        return INSTANCE;
     }
 
     @Override
