@@ -17,9 +17,6 @@ public class Paddle extends Sprite {
         }
     }
 
-    public int getPaddleSpeed() {
-        return speed;
-    }
     public void setPaddleSpeed(int speed) {
         this.speed = speed;
     }

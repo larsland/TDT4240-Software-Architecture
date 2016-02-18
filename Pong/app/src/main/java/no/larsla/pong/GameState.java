@@ -68,6 +68,7 @@ public class GameState extends State implements TouchListener, WidgetListener {
         return true;
     }
 
+    // Listener for the difficulty button (+-)
     @Override
     public void actionPerformed(WidgetAction widgetAction) {
         if (widgetAction.getSource() == difficultyBtn) {

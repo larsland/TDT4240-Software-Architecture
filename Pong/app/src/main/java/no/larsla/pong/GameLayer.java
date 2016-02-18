@@ -11,7 +11,7 @@ import sheep.gui.WidgetAction;
 import sheep.gui.WidgetListener;
 import sheep.math.BoundingBox;
 
-public class GameLayer extends Layer implements WidgetListener{
+public class GameLayer extends Layer{
     private Paddle paddle;
     private Paddle paddleComputer;
     private Board board;
@@ -54,16 +54,14 @@ public class GameLayer extends Layer implements WidgetListener{
         float ballX = ball.getPosition().getX();
 
         float distanceX = ballX - paddleX;
-        if (ballX < paddleX) {
-            paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
-        } else if (ballX > paddleX) {
-            paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
-        }
-/*
-        if (distanceX != 0) {
 
+        if (distanceX != 0) {
+            if (ballX < paddleX) {
+                paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
+            } else if (ballX > paddleX) {
+                paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
+            }
         }
-        */
 
         paddleComputer.update(dt);
         paddle.update(dt);
@@ -83,6 +81,7 @@ public class GameLayer extends Layer implements WidgetListener{
         canvas.drawText("" + message, (Main.screenWidth / 2), (Main.screenHeight / 2), font);
     }
 
+    // Changes the difficulty according to the current state of ComputerState
     public void changeDifficulty(ComputerState state) {
         if (state instanceof EasyState) {
             this.paddleComputer.setPaddleSpeed(350);
@@ -118,10 +117,5 @@ public class GameLayer extends Layer implements WidgetListener{
         computerScore = 0;
         ball.reset();
         message = "";
-    }
-
-    @Override
-    public void actionPerformed(WidgetAction widgetAction) {
-
     }
 }
