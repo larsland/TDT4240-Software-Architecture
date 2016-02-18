@@ -2,6 +2,9 @@ package no.larsla.pong;
 
 import sheep.game.State;
 import sheep.game.World;
+import sheep.gui.TextButton;
+import sheep.gui.WidgetAction;
+import sheep.gui.WidgetListener;
 import sheep.input.TouchListener;
 
 import android.content.Context;
@@ -11,17 +14,23 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
-public class GameState extends State implements TouchListener {
-
+public class GameState extends State implements TouchListener, WidgetListener {
 
     private World gameWorld;
     private GameLayer gameLayer;
+    private TextButton difficultyBtn;
+    private StateContext sc = new StateContext();
     private static final GameState INSTANCE = new GameState();
 
     private GameState() {
         gameWorld = new World();
         gameLayer = new GameLayer();
         gameWorld.addLayer(gameLayer);
+
+        difficultyBtn = new TextButton(Main.screenWidth-100, (Main.screenHeight/2) - 100, "Change difficulty");
+        difficultyBtn.addWidgetListener(this);
+
+        addTouchListener(difficultyBtn);
     }
 
     public static GameState getInstance() {
@@ -32,6 +41,7 @@ public class GameState extends State implements TouchListener {
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
         gameWorld.draw(canvas);
+        difficultyBtn.draw(canvas);
     }
 
     @Override
@@ -51,5 +61,13 @@ public class GameState extends State implements TouchListener {
     public boolean onTouchMove(MotionEvent event) {
         gameLayer.getPaddle().setPosition(event.getX(), gameLayer.getPaddle().getY());
         return true;
+    }
+
+    @Override
+    public void actionPerformed(WidgetAction widgetAction) {
+        if (widgetAction.getSource() == difficultyBtn) {
+            sc.change();
+            gameLayer.changeDifficulty(sc.getState());
+        }
     }
 }

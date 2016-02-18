@@ -6,9 +6,12 @@ import android.os.SystemClock;
 import sheep.game.Layer;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
+import sheep.gui.TextButton;
+import sheep.gui.WidgetAction;
+import sheep.gui.WidgetListener;
 import sheep.math.BoundingBox;
 
-public class GameLayer extends Layer {
+public class GameLayer extends Layer implements WidgetListener{
     private Paddle paddle;
     private Paddle paddleComputer;
     private Board board;
@@ -16,6 +19,8 @@ public class GameLayer extends Layer {
     private int playerScore;
     private int computerScore;
     private String message;
+    private StateContext sc = new StateContext();
+    private TextButton easyBtn, hardBtn;
 
     public GameLayer() {
         board = new Board();
@@ -54,9 +59,9 @@ public class GameLayer extends Layer {
 
         if (distanceX != 0) {
             if (ballX < paddleX) {
-                paddleComputer.setXSpeed(-350);
+                paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
             } else if (ballX > paddleX) {
-                paddleComputer.setXSpeed(350);
+                paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
             }
         }
 
@@ -76,6 +81,15 @@ public class GameLayer extends Layer {
         canvas.drawText("" + computerScore, 30, 100, font);
         canvas.drawText("" + playerScore, 30, (Main.screenHeight - 100), font);
         canvas.drawText("" + message, (Main.screenWidth / 2), (Main.screenHeight / 2), font);
+    }
+
+    public void changeDifficulty(ComputerState state) {
+        if (state instanceof EasyState) {
+            this.paddleComputer.setPaddleSpeed(500);
+        }
+        else if (state instanceof HardState) {
+            this.paddleComputer.setPaddleSpeed(350);
+        }
     }
 
     public void gameWon() {
@@ -104,5 +118,10 @@ public class GameLayer extends Layer {
         computerScore = 0;
         ball.reset();
         message = "";
+    }
+
+    @Override
+    public void actionPerformed(WidgetAction widgetAction) {
+
     }
 }

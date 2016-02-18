@@ -5,6 +5,8 @@ import sheep.graphics.Image;
 
 public class Paddle extends Sprite {
 
+    private int speed = 350;
+
     public Paddle(Image image, boolean player) {
         super(image);
         if (player) {
@@ -13,6 +15,13 @@ public class Paddle extends Sprite {
         else {
             setPosition(Main.screenWidth / 2, 150);
         }
+    }
+
+    public int getPaddleSpeed() {
+        return speed;
+    }
+    public void setPaddleSpeed(int speed) {
+        this.speed = speed;
     }
 
     @Override
