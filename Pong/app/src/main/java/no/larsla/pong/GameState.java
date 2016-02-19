@@ -22,7 +22,6 @@ public class GameState extends State implements TouchListener, WidgetListener {
     private World gameWorld;
     private GameLayer gameLayer;
     private TextButton difficultyBtn;
-    private StateContext sc = new StateContext();
     private static final GameState INSTANCE = new GameState();
 
     private GameState() {
@@ -51,15 +50,7 @@ public class GameState extends State implements TouchListener, WidgetListener {
 
     @Override
     public void update(float dt) {
-        if (checkTerminalState()) {
-            gameLayer.gameWon();
-        }
         gameWorld.update(dt);
-    }
-
-    // Checks if player or computer has reached 21 points
-    public boolean checkTerminalState() {
-        return (gameLayer.getPlayerScore() == 21) || (gameLayer.getComputerScore() == 21);
     }
 
     // Moves player's paddle to touch events x-position
@@ -72,8 +63,7 @@ public class GameState extends State implements TouchListener, WidgetListener {
     @Override
     public void actionPerformed(WidgetAction widgetAction) {
         if (widgetAction.getSource() == difficultyBtn) {
-            sc.change();
-            gameLayer.changeDifficulty(sc.getState());
+            gameLayer.changeDifficulty();
         }
     }
 }

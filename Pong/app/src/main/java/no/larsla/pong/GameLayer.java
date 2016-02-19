@@ -2,13 +2,9 @@ package no.larsla.pong;
 
 import android.graphics.Canvas;
 import android.graphics.Typeface;
-import android.os.SystemClock;
 import sheep.game.Layer;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
-import sheep.gui.TextButton;
-import sheep.gui.WidgetAction;
-import sheep.gui.WidgetListener;
 import sheep.math.BoundingBox;
 
 public class GameLayer extends Layer{
@@ -19,6 +15,7 @@ public class GameLayer extends Layer{
     private int playerScore;
     private int computerScore;
     private String message;
+    private Difficulty diff;
 
     public GameLayer() {
         board = new Board();
@@ -26,6 +23,7 @@ public class GameLayer extends Layer{
         paddleComputer = new Paddle(new Image(R.drawable.paddle), false);
         ball = Ball.getInstance();
 
+        diff = Difficulty.EASY;
         playerScore = 0;
         computerScore = 0;
         message = "";
@@ -34,6 +32,10 @@ public class GameLayer extends Layer{
     // Main event loop; checks if ball collides with wall, a paddle, or if a paddle scores a point
     @Override
     public void update(float dt) {
+        if (checkTerminalState()) {
+            gameWon();
+        }
+
         if ((ball.getPosition().getX() < 8) || (ball.getPosition().getX() > Main.screenWidth - 8)) {
             ball.setSpeed(-ball.getSpeed().getX() * 1.1f, ball.getSpeed().getY());
         }
@@ -49,20 +51,7 @@ public class GameLayer extends Layer{
             ball.reset();
         }
 
-        // Moves the computer paddle's x-position according to the balls position
-        float paddleX = paddleComputer.getPosition().getX();
-        float ballX = ball.getPosition().getX();
-
-        float distanceX = ballX - paddleX;
-
-        if (distanceX != 0) {
-            if (ballX < paddleX) {
-                paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
-            } else if (ballX > paddleX) {
-                paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
-            }
-        }
-
+        moveComputer();
         paddleComputer.update(dt);
         paddle.update(dt);
         ball.update(dt);
@@ -82,13 +71,20 @@ public class GameLayer extends Layer{
     }
 
     // Changes the difficulty according to the current state of ComputerState
-    public void changeDifficulty(ComputerState state) {
-        if (state instanceof EasyState) {
-            this.paddleComputer.setPaddleSpeed(350);
+    public void changeDifficulty() {
+        switch (diff) {
+            case HARD: this.paddleComputer.setPaddleSpeed(350);
+                this.diff = Difficulty.EASY;
+                break;
+            case EASY: this.paddleComputer.setPaddleSpeed(800);
+                this.diff = Difficulty.HARD;
+                break;
         }
-        else if (state instanceof HardState) {
-            this.paddleComputer.setPaddleSpeed(800);
-        }
+    }
+
+    // Checks if player or computer has reached 21 points
+    public boolean checkTerminalState() {
+        return (playerScore == 21) || (computerScore == 21);
     }
 
     public void gameWon() {
@@ -103,14 +99,23 @@ public class GameLayer extends Layer{
         resetGame();
     }
 
+    // Moves the computer paddle's x-position according to the balls position
+    public void moveComputer() {
+        float paddleX = paddleComputer.getPosition().getX();
+        float ballX = ball.getPosition().getX();
+        float distanceX = ballX - paddleX;
+
+        if (distanceX != 0) {
+            if (ballX < paddleX) {
+                paddleComputer.setXSpeed(-paddleComputer.getPaddleSpeed());
+            } else if (ballX > paddleX) {
+                paddleComputer.setXSpeed(paddleComputer.getPaddleSpeed());
+            }
+        }
+    }
+
     public Paddle getPaddle() {
         return this.paddle;
-    }
-    public int getPlayerScore() {
-        return this.playerScore;
-    }
-    public int getComputerScore() {
-        return this.computerScore;
     }
     public void resetGame() {
         playerScore = 0;

@@ -20,6 +20,9 @@ public class Paddle extends Sprite {
     public void setPaddleSpeed(int speed) {
         this.speed = speed;
     }
+    public int getPaddleSpeed() {
+        return (speed);
+    }
 
     @Override
     public void update(float dt) {
