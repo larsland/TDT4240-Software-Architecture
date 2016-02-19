@@ -123,4 +123,7 @@ public class GameLayer extends Layer{
         ball.reset();
         message = "";
     }
+    public String getDiff() {
+        return (diff.toString());
+    }
 }

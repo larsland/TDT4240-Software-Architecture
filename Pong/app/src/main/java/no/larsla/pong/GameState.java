@@ -29,9 +29,9 @@ public class GameState extends State implements TouchListener, WidgetListener {
         gameLayer = new GameLayer();
         gameWorld.addLayer(gameLayer);
 
-        Font buttonFont = new Font(255, 255, 255, 100, Typeface.SANS_SERIF, Typeface.BOLD);
+        Font buttonFont = new Font(255, 255, 255, 50, Typeface.SANS_SERIF, Typeface.BOLD);
         Paint[] buttonStyle = {buttonFont, buttonFont};
-        difficultyBtn = new TextButton(Main.screenWidth-200, (Main.screenHeight/2) - 100, "+-", buttonStyle);
+        difficultyBtn = new TextButton(Main.screenWidth-200, (Main.screenHeight/2) - 100, gameLayer.getDiff(), buttonStyle);
         difficultyBtn.addWidgetListener(this);
 
         addTouchListener(difficultyBtn);
@@ -64,6 +64,7 @@ public class GameState extends State implements TouchListener, WidgetListener {
     public void actionPerformed(WidgetAction widgetAction) {
         if (widgetAction.getSource() == difficultyBtn) {
             gameLayer.changeDifficulty();
+            difficultyBtn.setLabel(gameLayer.getDiff());
         }
     }
 }
